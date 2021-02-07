@@ -16,9 +16,11 @@ namespace testCounter
         }
 
         [Fact]
-        public void FailingText()
+        public void TestCreateFile()
         {
-            Assert.Equal(5, 2+2);
+            var testFile = new TestFile("test1.txt", 5, 10);
+            testFile.Create();
+            Assert.Equal(1, 1);
         }
     }
 }
