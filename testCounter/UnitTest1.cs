@@ -4,6 +4,7 @@ using System;
 using Xunit;
 
 using GwLineCounterTest;
+using GwLineCounter;
 
 namespace testCounter
 {
@@ -20,7 +21,10 @@ namespace testCounter
         {
             var testFile = new TestFile("test1.txt", 5, 10);
             testFile.Create();
-            Assert.Equal(1, 1);
+
+            var myCounter = new FileLineCounter();
+            int nLines = myCounter.GetNumberLines("test1.txt");
+            Assert.Equal(10, nLines);
         }
     }
 }
