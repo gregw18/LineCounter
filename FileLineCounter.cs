@@ -17,7 +17,19 @@ namespace GwLineCounter
             int numLines = 0;
             if (File.Exists(fileName))
             {
-                numLines++;
+                using (FileStream fs = File.OpenRead(fileName))
+                {
+                    using (TextReader reader = new StreamReader (fs))
+                    {
+                        string thisLine = "";
+                        while (reader.Peek() >=0)
+                        {
+                            thisLine = reader.ReadLine();
+                            if (thisLine.Trim().Length > 0)
+                                numLines++;
+                        }
+                    }
+                }
             }
             else
             {
