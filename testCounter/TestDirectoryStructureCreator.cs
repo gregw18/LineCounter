@@ -20,7 +20,29 @@ namespace GwLineCounterTest
         }
 
         public bool CreateStruct(TestDirectoryContents[] testStruct){
+            Logger.Info("TestDirectoryStructureCreator.CreateStruct starting.");
+            // Make sure that root dir doesn't already exist, then create it.
+            // (If it does exist, remove it, so can be sure will start off empty.)
+            if (Directory.Exists(testStructRootDir))
+            {
+                Directory.Delete(testStructRootDir, true);
+            }
+            Directory.CreateDirectory(testStructRootDir);
+
+            foreach (TestDirectoryContents testContents in testStruct)
+            {
+                testContents.Create(testStructRootDir);
+            }
+            
             return true;
+        }
+
+        public void RemoveStruct()
+        {
+            if (Directory.Exists(testStructRootDir))
+            {
+                Directory.Delete(testStructRootDir, true);
+            }
         }
     }
 }

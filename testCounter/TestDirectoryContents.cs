@@ -12,25 +12,26 @@ namespace GwLineCounterTest
     {
         public string DirName;
         public TestFile[] TestFiles;
-        private int numNonMatchingFiles;
+        private int numNonmatchingFiles;
         private int numMatchingFiles;
         private string fileSpec;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public TestDirectoryContents(string dirName, string myFileSpec, int matchingFiles, int nonMatchingFiles)
+        public TestDirectoryContents(string dirName, string myFileSpec, int nonmatchingFiles, int matchingFiles,
+                                    TestFile[] testFiles)
         {
             DirName = dirName;
             // TestFiles = new TestFile[matchingFiles];
-            numNonMatchingFiles = nonMatchingFiles;
+            numNonmatchingFiles = nonmatchingFiles;
             numMatchingFiles = matchingFiles;
             fileSpec = myFileSpec;
+            TestFiles = testFiles;
         }
 
-        public bool Create(string rootDir, TestFile[] testFiles)
+        public bool Create(string rootDir)
         {
             bool succeeded = false;
 
-            TestFiles = testFiles;
             try
             {
                 
@@ -39,7 +40,7 @@ namespace GwLineCounterTest
                     string fullDestDir = Path.Combine(rootDir, DirName);
                     Directory.CreateDirectory(fullDestDir);
 
-                    for (int i = 0; i < numNonMatchingFiles; i++)
+                    for (int i = 0; i < numNonmatchingFiles; i++)
                     {
                         // Create non-matching file.
                         CreateNonmatchingFile(fullDestDir);
@@ -71,11 +72,10 @@ namespace GwLineCounterTest
         {
             bool succeeded = false;
 
-            string fileName = GetNonmatchingFilename(fullDestDir);
-            string fullPath = Path.Combine(fullDestDir, fileName);
-
             if (Directory.Exists(fullDestDir))
             {
+                string fileName = GetNonmatchingFilename(fullDestDir);
+                string fullPath = Path.Combine(fullDestDir, fileName);
                 using (StreamWriter outFile = new StreamWriter(fullPath))
                 {
                     outFile.WriteLine("Not a match.");
