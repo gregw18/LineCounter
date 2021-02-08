@@ -15,7 +15,9 @@ namespace GwLineCounterTest
         private string FileName;
         private int BlankLines;
         private int NonblankLines;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
+        // fileName should be just name of file, no path. i.e. myfile.txt.
         public TestFile(string fileName, int blankLines, int nonblankLines)
         {
             FileName = fileName;
@@ -23,19 +25,29 @@ namespace GwLineCounterTest
             NonblankLines = nonblankLines;
         }
 
-        public void Create()
+        public void Create(string destDir)
         {
-            if (File.Exists(FileName))
-                File.Delete(FileName);
+            string fullPath = Path.Combine(destDir, FileName);
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
 
-            using (StreamWriter outFile = new StreamWriter(FileName))
+            if (Directory.Exists(destDir))
             {
-                int maxLines = (BlankLines > NonblankLines) ? BlankLines : NonblankLines;
-                for (int i = 0; i < maxLines; i++)
+                using (StreamWriter outFile = new StreamWriter(fullPath))
                 {
-                    if (i < BlankLines) {outFile.WriteLine("");}
-                    if (i < NonblankLines) {outFile.WriteLine("not a blank line.");}
+                    // Write alternating blank and non-blank lines until hit lower of two,
+                    // then write balance of lines.
+                    int maxLines = (BlankLines > NonblankLines) ? BlankLines : NonblankLines;
+                    for (int i = 0; i < maxLines; i++)
+                    {
+                        if (i < BlankLines) {outFile.WriteLine("");}
+                        if (i < NonblankLines) {outFile.WriteLine("not a blank line.");}
+                    }
                 }
+            }
+            else
+            {
+                Logger.Error("TestFile.Create. Requested directory {destDir} doesn't exist", destDir);
             }
         }
     }

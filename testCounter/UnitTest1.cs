@@ -1,6 +1,8 @@
 // Interface and implementation for counting number of non-blank lines in a file.
 
 using System;
+using System.IO;
+
 using Xunit;
 
 using GwLineCounterTest;
@@ -20,7 +22,7 @@ namespace testCounter
         public void TestCreateFile()
         {
             var testFile = new TestFile("test1.txt", 5, 10);
-            testFile.Create();
+            testFile.Create(Directory.GetCurrentDirectory());
 
             var myCounter = new FileLineCounter();
             int nLines = myCounter.GetNumberLines("test1.txt");
