@@ -3,6 +3,8 @@
 
 using System.IO;
 
+using GwLineCounterTest;
+
 namespace GwLineCounterTest
 {
     public class TestDirectoryStructureCreator
