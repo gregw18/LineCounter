@@ -14,19 +14,28 @@ namespace testCounter
 
         bool deleteWhenFinished = true;
 
-        [Fact]
-        public void TestCreateEmptyRoot()
+
+
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(1, 0)]
+        [InlineData(0, 1)]
+        [InlineData(1, 1)]
+        public void TestCreateRootDirFiles(int matchingFiles, int nonmatchingFiles)
         {
+            // Test varying numbers of files in the root dir.
             var myCreator = new TestDirectoryStructureCreator();
             TestDirectoryContents[] myContents = new TestDirectoryContents[1];
-            // Note: leaving TestFile[0] empty to indicate no files in the directory.
-            TestFile[] testFiles = new TestFile[0];
-            myContents[0] = new TestDirectoryContents("", "*.txt", 0, testFiles);
+
+            TestFile[] testFiles = new TestFile[matchingFiles];
+            for (int i = 0; i < matchingFiles; i++)
+            {
+                testFiles[i] = new TestFile($"file{i}.txt", 1, 1);
+            }
+            myContents[0] = new TestDirectoryContents("", "*.txt", nonmatchingFiles, testFiles);
             myCreator.CreateStruct(myContents);
-        
-            // Verify that have expected directories and sub-directories, with expected numbers of matching and 
-            // non-matching files in each. Not testing line counting, as TestFileTests does that.
-            bool matched = StructureMatches(myContents, myCreator.testStructRootDir);
+
+            bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
 
             if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
         }
