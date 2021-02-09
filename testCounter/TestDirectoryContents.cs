@@ -10,20 +10,18 @@ namespace GwLineCounterTest
 {
     public class TestDirectoryContents
     {
-        public string DirName;
-        public TestFile[] TestFiles;
-        private int numNonmatchingFiles;
-        private int numMatchingFiles;
-        private string fileSpec;
+        public readonly string DirName;
+        public readonly string fileSpec;
+        public readonly int numNonmatchingFiles;
+        public readonly TestFile[] TestFiles;
+
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public TestDirectoryContents(string dirName, string myFileSpec, int nonmatchingFiles, int matchingFiles,
-                                    TestFile[] testFiles)
+        public TestDirectoryContents(string dirName, string myFileSpec, int nonmatchingFiles, TestFile[] testFiles)
         {
             DirName = dirName;
             // TestFiles = new TestFile[matchingFiles];
             numNonmatchingFiles = nonmatchingFiles;
-            numMatchingFiles = matchingFiles;
             fileSpec = myFileSpec;
             TestFiles = testFiles;
         }
@@ -100,10 +98,12 @@ namespace GwLineCounterTest
                 randomName = Path.GetRandomFileName();
                 if (Path.GetExtension(randomName) == Path.GetExtension(fileSpec))
                 {
+                    // If we accidentally created a random filename that has our target extension, try again.
                      continue;
                 }
                 else if (File.Exists(Path.Combine(fullDestDir, randomName))) 
                 {
+                    // If the new random filename accidentally already exists, try again.
                     continue;
                 }
                 else 
