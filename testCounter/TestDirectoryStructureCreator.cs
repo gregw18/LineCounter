@@ -9,7 +9,7 @@ namespace GwLineCounterTest
 {
     public class TestDirectoryStructureCreator
     {
-        private string testStructRootDir;
+        public readonly string testStructRootDir;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public TestDirectoryStructureCreator()
