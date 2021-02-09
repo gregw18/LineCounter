@@ -12,6 +12,8 @@ namespace testCounter
     public class TestDirectoryStructureCreatorTests
     {
 
+        bool deleteWhenFinished = true;
+
         [Fact]
         public void TestCreateEmptyRoot()
         {
@@ -24,7 +26,9 @@ namespace testCounter
         
             // Verify that have expected directories and sub-directories, with expected numbers of matching and 
             // non-matching files in each. Not testing line counting, as TestFileTests does that.
-            StructureMatches(myContents, myCreator.testStructRootDir);
+            bool matched = StructureMatches(myContents, myCreator.testStructRootDir);
+
+            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
         }
 
         [Fact]
@@ -37,7 +41,9 @@ namespace testCounter
             myContents[0] = new TestDirectoryContents("dir1", "*.txt", 0, testFiles);
             myCreator.CreateStruct(myContents);
 
-            StructureMatches(myContents, myCreator.testStructRootDir);        
+            bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
+
+            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
         }
 
         private bool StructureMatches(TestDirectoryContents[] myContents, string rootDir)
@@ -56,6 +62,7 @@ namespace testCounter
                 int nonMatches = Directory.GetFiles(fullPath).Length - numMatches;
                 errMsg = $"Number of nonmatching files failed in directory {fullPath}, expected: {dirContents.numNonmatchingFiles}, actual: {nonMatches}.";
                 Assert.True(dirContents.numNonmatchingFiles == nonMatches, errMsg);
+                structMatches = true;
             }
 
             return structMatches;
