@@ -37,17 +37,9 @@ namespace testGwLineCounter
 
             myContents[0] = new TestDirectoryContents("", "*.txt", nonmatchingFiles, testFiles);
             myCreator.CreateStruct(myContents);
-            DirectoryLineCounter myCounter = new DirectoryLineCounter();
 
-            myCounter.PopulateList(myCreator.testStructRootDir, "*.txt");
-            DirectoryLineCounterResults myResults = myCounter.CountLines();
-
-            Assert.Equal(matchingFiles, myResults.numFiles);
-            Assert.Equal(matchingFiles * linesPerMatchingFile, myResults.numLines);
-
-            if (deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            CountLinesAndTest(myCreator.testStructRootDir, matchingFiles);
         }
-
         
         [Theory]
         [InlineData(0, 0)]
@@ -62,15 +54,8 @@ namespace testGwLineCounter
             TestFile[] testFiles = CreateTestFiles(matchingFiles);
             myContents[0] = new TestDirectoryContents("dir1", "*.txt", nonmatchingFiles, testFiles);
             myCreator.CreateStruct(myContents);
-            DirectoryLineCounter myCounter = new DirectoryLineCounter();
 
-            myCounter.PopulateList(myCreator.testStructRootDir, "*.txt");
-            DirectoryLineCounterResults myResults = myCounter.CountLines();
-
-            Assert.Equal(matchingFiles, myResults.numFiles);
-            Assert.Equal(matchingFiles * linesPerMatchingFile, myResults.numLines);
-
-            if (deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            CountLinesAndTest(myCreator.testStructRootDir, matchingFiles);
         }
         
         [Theory]
@@ -88,17 +73,9 @@ namespace testGwLineCounter
             testFiles = CreateTestFiles(matchingFiles);
             myContents[1] = new TestDirectoryContents(@"dir1\dir2", "*.txt", nonmatchingFiles, testFiles);
             myCreator.CreateStruct(myContents);
-            DirectoryLineCounter myCounter = new DirectoryLineCounter();
-
-            myCounter.PopulateList(myCreator.testStructRootDir, "*.txt");
-            DirectoryLineCounterResults myResults = myCounter.CountLines();
 
             // Expect matchingFiles in dir2 plus one file from dir1.
-            int expectedFiles = matchingFiles + 1;
-            Assert.Equal(expectedFiles, myResults.numFiles);
-            Assert.Equal(expectedFiles * linesPerMatchingFile, myResults.numLines);
-
-            if (deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            CountLinesAndTest(myCreator.testStructRootDir, matchingFiles + 1);
         }
         
         [Theory]
@@ -117,20 +94,13 @@ namespace testGwLineCounter
             myContents[1] = new TestDirectoryContents("dir2", "*.txt", nonmatchingFiles, testFiles);
 
             myCreator.CreateStruct(myContents);
-            DirectoryLineCounter myCounter = new DirectoryLineCounter();
-
-            myCounter.PopulateList(myCreator.testStructRootDir, "*.txt");
-            DirectoryLineCounterResults myResults = myCounter.CountLines();
 
             // Expect matchingFiles in dir2 plus one file from dir1.
-            int expectedFiles = matchingFiles + 1;
-            Assert.Equal(expectedFiles, myResults.numFiles);
-            Assert.Equal(expectedFiles * linesPerMatchingFile, myResults.numLines);
-
-            if (deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            CountLinesAndTest(myCreator.testStructRootDir, matchingFiles + 1);
         }
 
         // Create array of TestFile, size matchingFiles. Assumes .txt extensions.
+        // Hardcodes number of blank lines per file to 1, nonempty lines to linesPerMatchingFile.
         private TestFile[] CreateTestFiles(int matchingFiles)
         {
             TestFile[] testFiles = new TestFile[matchingFiles];
@@ -140,6 +110,19 @@ namespace testGwLineCounter
             }
 
             return testFiles;
+        }
+
+        private void CountLinesAndTest(string rootDir, int expectedMatchingFiles)
+        {
+            var myCounter = new DirectoryLineCounter();
+
+            myCounter.PopulateList(rootDir, "*.txt");
+            DirectoryLineCounterResults myResults = myCounter.CountLines();
+
+            Assert.Equal(expectedMatchingFiles, myResults.numFiles);
+            Assert.Equal(expectedMatchingFiles * linesPerMatchingFile, myResults.numLines);
+
+            if (deleteWhenFinished) { Directory.Delete(rootDir, true); }
         }
 
     }
