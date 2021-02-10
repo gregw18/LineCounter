@@ -19,6 +19,9 @@ namespace LineCounter
         static void Main(string[] args)
         {
             Logger.Info("Starting Main");
+            cmdLineArgs myArgs = ParseArgs(args);
+
+            /*
             Logger.Info("Current working directory={Directory.GetCurrentDirectory()}", Directory.GetCurrentDirectory());
 
             string fileName = "FileLineCounter.cs";
@@ -30,6 +33,52 @@ namespace LineCounter
             int numLines = myCounter.GetNumberLines (fileName);
 
             Logger.Info("Number of lines returned is {numLines}", numLines);
+            */
         }
+
+        // Parse provided arguments. Could be 0, 1 or two, containing origin directory and fileSpec for files to match.
+        // If want to provide fileSpec, have to also provide origin directory. Origin defaults to ., fileSpec
+        // defaults to *.*.
+        // Does not validate that directory exists or that fileSpec is valid.
+        private static cmdLineArgs ParseArgs(string[] args)
+        {
+            var myArgs = new cmdLineArgs();
+            myArgs.rootDir = ".";
+            myArgs.fileSpec = "*.*";
+
+            if (args.Length > 2)
+            {
+                DisplayOptions();
+            }
+            else if (args.Length > 0)
+            {
+                myArgs.rootDir = args[0];
+                if (args.Length == 2)
+                {
+                    myArgs.fileSpec = args[1];
+                }
+            }
+
+            return myArgs;
+        }
+
+        private static void DisplayOptions()
+        {
+            string options = "This program counts the number of nonblank lines in files that match the specified file ";
+            options += "pattern, in the requested directory and all subdirectories.\n  It accepts 0, 1 or";
+            options += " 2 options.\n  The first option is the directory to start in. ";
+            options += "It defaults to the current directory.\n  The second option is a wildcard pattern for which files ";
+            options += "to work on - e.g. *.txt. Currently, it only supports specifying the extension. It defaults to *.*.\n";
+            options += "It will display the number of matching files that it found and the total number of nonblank ";
+            options += "lines that it found in those files.";
+            Console.WriteLine(options);
+        }
+    }
+
+    // Hold the arguments for the program - directory to start in, string containing filespec to match - i.e. *.cs.
+    public class cmdLineArgs
+    {
+        public string rootDir;
+        public string fileSpec;
     }
 }
