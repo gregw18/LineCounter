@@ -32,21 +32,6 @@ namespace LineCounter
                 // Didn't get valid arguments, so display intended usage.
                 DisplayOptions();
             }
-
-            /*
-            Logger.Info("Current working directory={Directory.GetCurrentDirectory()}", Directory.GetCurrentDirectory());
-
-            string fileName = "FileLineCounter.cs";
-            if (args.Length == 1)
-                fileName = args[0];
-            Logger.Info("Working on file {fileName}", fileName);
-
-            GwLineCounter.FileLineCounter myCounter = new GwLineCounter.FileLineCounter ();
-            int numLines = myCounter.GetNumberLines (fileName);
-
-            Logger.Info("Number of lines returned is {numLines}", numLines);
-            */
-
         }
 
         private static void DisplayOptions()
