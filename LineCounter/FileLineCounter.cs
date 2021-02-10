@@ -26,7 +26,9 @@ namespace GwLineCounter
                         {
                             thisLine = reader.ReadLine();
                             if (thisLine.Trim().Length > 0)
+                            {
                                 numLines++;
+                            }
                         }
                     }
                 }
@@ -36,7 +38,8 @@ namespace GwLineCounter
                 Logger.Error("GetNumberLines failed, file {fileName} doesn't exist.", fileName);
                 numLines = -1;
             }
-
+            Logger.Info($"{fileName}: {numLines}");
+            
             return numLines;
         }
     }

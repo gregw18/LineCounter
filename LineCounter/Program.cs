@@ -20,6 +20,12 @@ namespace LineCounter
         {
             Logger.Info("Starting Main");
             cmdLineArgs myArgs = ParseArgs(args);
+            myArgs.Display();
+
+            var myCounter = new DirectoryLineCounter();
+            myCounter.PopulateList(myArgs.rootDir, myArgs.fileSpec);
+            DirectoryLineCounterResults myResults = myCounter.CountLines();
+            myResults.Display();
 
             /*
             Logger.Info("Current working directory={Directory.GetCurrentDirectory()}", Directory.GetCurrentDirectory());
@@ -80,5 +86,11 @@ namespace LineCounter
     {
         public string rootDir;
         public string fileSpec;
+
+        public void Display()
+        {
+            Console.WriteLine($"rootDir:  {rootDir}");
+            Console.WriteLine($"fileSpec: {fileSpec}");
+        }
     }
 }

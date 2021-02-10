@@ -1,6 +1,7 @@
 // Coordinate counting lines in all files in current directory and all subdirectories.
 // Also counts number of files that were included in the count.
 
+using System;
 using System.IO;
 
 namespace GwLineCounter
@@ -14,6 +15,12 @@ namespace GwLineCounter
         {
             numFiles = 0;
             numLines = 0;
+        }
+
+        public void Display()
+        {
+            Console.WriteLine($"{numFiles} matching files found.");
+            Console.WriteLine($"{numLines} nonblank lines found.");
         }
     }
 }
