@@ -1,26 +1,20 @@
-// Parse provided arguments. Could be 0, 1 or two, containing origin directory and fileSpec for files to match.
+// Parse provided command line arguments. Could be 0, 1 or two, containing origin directory and fileSpec for files to match.
 // If want to provide fileSpec, have to also provide origin directory. Origin defaults to ., fileSpec
 // defaults to *.*.
 // Does not validate that directory exists or that fileSpec is valid.
 
 using System;
 
-//using NLog;
-
 namespace GwLineCounter
 {
     public class ArgParser
     {
-        public string rootDir;
-        public string fileSpec;
+        public string rootDir = ".";
+        public string fileSpec = "*.*";
 
         public bool ParseArgs(string[] args)
         {
             bool succeeded = false;
-
-            rootDir = ".";
-            fileSpec = "*.*";
-
 
             if (args.Length == 0)
             {

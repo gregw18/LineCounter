@@ -1,5 +1,5 @@
 // Coordinate counting lines in all files in current directory and all subdirectories.
-// Also counts number of files that were included in the count.
+// Also counts number of files that were included in the line count.
 
 using System.IO;
 

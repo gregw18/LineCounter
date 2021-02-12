@@ -1,8 +1,7 @@
-// Coordinate counting lines in all files in current directory and all subdirectories.
-// Also counts number of files that were included in the count.
+// Class tracks results from counting. Tracks number of files looked at and the total number of
+// nonblank lines in those files.
 
 using System;
-using System.IO;
 
 namespace GwLineCounter
 {

@@ -1,13 +1,9 @@
 
-using System;
 using System.IO;
 
 using Xunit;
 
-using GwLineCounterTest;
-using GwLineCounter;
-
-namespace testCounter
+namespace GwLineCounterTest
 {
     public class TestDirectoryStructureCreatorTests
     {
@@ -33,7 +29,7 @@ namespace testCounter
 
             bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
 
-            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            if (matched && deleteWhenFinished) { myCreator.RemoveStruct(); }
         }
 
         [Theory]
@@ -52,7 +48,7 @@ namespace testCounter
 
             bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
 
-            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            if (matched && deleteWhenFinished) { myCreator.RemoveStruct(); }
         }
 
         [Theory]
@@ -74,7 +70,7 @@ namespace testCounter
 
             bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
 
-            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            if (matched && deleteWhenFinished) { myCreator.RemoveStruct(); }
         }
 
         [Theory]
@@ -96,7 +92,7 @@ namespace testCounter
 
             bool matched = StructureMatches(myContents, myCreator.testStructRootDir);        
 
-            if (matched && deleteWhenFinished) { Directory.Delete(myCreator.testStructRootDir, true); }
+            if (matched && deleteWhenFinished) { myCreator.RemoveStruct(); }
         }
 
         // Create array of TestFile, size matchingFiles. Assumes .txt extensions.
@@ -111,6 +107,8 @@ namespace testCounter
             return testFiles;
         }
 
+        // Verify that have expected directories and numbers of matching and nonmatching files
+        // in each directory.
         private bool StructureMatches(TestDirectoryContents[] myContents, string rootDir)
         {
             bool structMatches = false;

@@ -1,21 +1,18 @@
+// Integration tests for program - i.e. counting number of nonblank lines in matching files in given
+// directory and its sub-directories. Uses the TestDirectoryStructureCreator to create the desired
+// directories and files, under the user's temp dir, then removes the structure when finished, unless
+// set deleteWhenFinished flag to false, or a test fails.
 
-using System;
 using System.IO;
 
 using Xunit;
 
-using GwLineCounterTest;
 using GwLineCounter;
 
-namespace testGwLineCounter
+namespace GwLineCounterTest
 {
-    // Integration tests for program - i.e. counting number of nonblank lines in matching files in given
-    // directory and its sub-directories. Uses the TestDirectoryStructureCreator to create the desired
-    // directories and files, under the user's temp dir, then removes the structure when finished, unless
-    // set deleteWhenFinished flag to false, or a test fails.
     public class DirectoryLineCounterTests
     {
-
         const bool deleteWhenFinished = true;
 
         // Am putting same number of non-empty lines in every matching file, to make checking results simpler.

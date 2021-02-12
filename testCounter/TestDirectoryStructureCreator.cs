@@ -1,9 +1,7 @@
-// Create one or more directories, containing one or more files, with specified number of blank
-// and nonblank lines, for testing the file line counter.
+// Create one or more test directories under a temp root dir, containing one or more files, with specified
+// number of blank and nonblank lines, for testing the file line counter.
 
 using System.IO;
-
-// using GwLineCounterTest;
 
 namespace GwLineCounterTest
 {
@@ -20,9 +18,9 @@ namespace GwLineCounterTest
         }
 
         public bool CreateStruct(TestDirectoryContents[] testStruct){
-            Logger.Info("TestDirectoryStructureCreator.CreateStruct starting.");
             // Make sure that root dir doesn't already exist, then create it.
             // (If it does exist, remove it, so can be sure will start off empty.)
+            Logger.Info("TestDirectoryStructureCreator.CreateStruct starting.");
             if (Directory.Exists(testStructRootDir))
             {
                 Directory.Delete(testStructRootDir, true);
@@ -37,6 +35,7 @@ namespace GwLineCounterTest
             return true;
         }
 
+        // Remove the original temp dir, recursively, so that entire test structure is deleted.
         public void RemoveStruct()
         {
             if (Directory.Exists(testStructRootDir))

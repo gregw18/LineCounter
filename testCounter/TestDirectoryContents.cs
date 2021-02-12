@@ -1,9 +1,8 @@
-// Class that describes the contents of a test directory. I.e. the directory name, the filespec for files
+// Class that describes the contents of a single test directory. I.e. the directory name, the filespec for files
 // that we want to match, the number of matching files, the number of non-matching files and the number of 
 // blank and nonblank lines in each matching file. It also creates the directory, under a given parent,
 // with the requested contents.
 
-using System;
 using System.IO;
 
 namespace GwLineCounterTest

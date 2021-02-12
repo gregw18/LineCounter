@@ -4,13 +4,10 @@
 */
 
 using System;
-using System.IO;
 
 using NLog;
 
-using GwLineCounter;
-
-namespace LineCounter
+namespace GwLineCounter
 {
     class Program
     {

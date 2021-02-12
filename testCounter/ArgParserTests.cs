@@ -1,17 +1,13 @@
 // Test argument parsing.
 
-using System;
-using System.IO;
-
 using Xunit;
 
 using GwLineCounter;
 
-namespace testArgParser
+namespace GwLineCounterTest
 {
     public class ArgParserTests
     {
-
         string defaultRoot = ".";
         string defaultFileSpec = "*.*";
         

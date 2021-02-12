@@ -1,15 +1,13 @@
 // Testing that can correctly read number of non-blank lines from my automatically
 // generated test files.
 
-using System;
 using System.IO;
 
 using Xunit;
 
-using GwLineCounterTest;
 using GwLineCounter;
 
-namespace testCounter
+namespace GwLineCounterTest
 {
     public class TestFileTests
     {
