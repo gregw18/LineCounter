@@ -34,7 +34,7 @@ namespace GwLineCounter
         private static void DisplayOptions()
         {
             string options = "This program counts the number of nonblank lines in files that match the specified file ";
-            options += "pattern, in the requested directory and all subdirectories.\n  It accepts 0, 1 or";
+            options += "pattern, in the requested directory and all subdirectories.\nIt accepts 0, 1 or";
             options += " 2 options.\n  The first option is the directory to start in. ";
             options += "It defaults to the current directory.\n  The second option is a wildcard pattern for which files ";
             options += "to work on - e.g. *.txt. Currently, it only supports specifying the extension. It defaults to *.*.\n";

@@ -4,10 +4,7 @@ using System.IO;
 
 namespace GwLineCounter
 {
-    public interface IFileLineCounter { int GetNumberLines(string fileName); }
-
-
-    public class FileLineCounter : IFileLineCounter
+    public class FileLineCounter
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
